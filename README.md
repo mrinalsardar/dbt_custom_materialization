@@ -14,5 +14,6 @@ So we choose the 3rd option.
 ## Requirements
 Now let's understand we do we even need that. Following is the set of requirements:
 
-- `dbt_valid_to` column should have value `9999-12-31 23:59:58.9999999` instead of `null`
-- Our definition of delete is slightly different from [dbt delete](https://docs.getdbt.com/docs/build/snapshots#hard-deletes-opt-in). We need to updated the `dbt_valid_to` column to have the current timestamp but also we need to insert one extra record for which `dbt_valid_from` will be set to current timestamp and `dbt_valid_to` will be set to `9999-12-31 23:59:58.9999999`.
+- `dbt_valid_to` column should have value `9999-12-31 23:59:58` instead of `null`
+- Our definition of delete is slightly different from [dbt delete](https://docs.getdbt.com/docs/build/snapshots#hard-deletes-opt-in). We need to updated the `dbt_valid_to` column to have the current timestamp but also we need to insert one extra record for which `dbt_valid_from` will be set to current timestamp and `dbt_valid_to` will be set to `9999-12-31 23:59:58`.
+- We also need an `operation_type` column to indicate what type of operation was performed on a row.

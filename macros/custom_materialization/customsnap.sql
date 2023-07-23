@@ -54,11 +54,11 @@
         {% do quoted_source_columns.append(adapter.quote(column.name)) %}
       {% endfor %}
 
-      {% set final_sql = snapshot_merge_sql(
+      {% set final_sql = csnapshot_merge_sql(
             target = target_relation,
             source = staging_table,
             insert_cols = quoted_source_columns,
-            unique_key = unique_key
+            strategy = strategy
          )
       %}
 
