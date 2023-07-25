@@ -1,5 +1,20 @@
+{{
+    config(
+        materialized='incremental'
+    )
+}}
+
 select
-    f.*
+    *
 from
-    {{ ref('features') }} f
-    join {{ ref('sales_data_stores') }} sl on f.store = sl.store and f.date = sl.date
+    {{ ref('combined_data') }}
+
+{% if is_incremental() %}
+where
+    sales_date between
+        (select max(sales_date) from {{ this }})
+        and (select max(sales_date) from {{ this }}) + interval '6 days'
+{% endif %}
+
+{# select * from {{ ref('combined_data') }} where sales_date =
+(select min(sales_date) from {{ ref('combined_data') }}) #}

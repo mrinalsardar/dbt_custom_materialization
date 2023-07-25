@@ -1,10 +1,8 @@
-{# select
-    s.Store,
-    s.Date,
-    sum(s.Weekly_sales) as Weekly_sales
+select
+    store,
+    to_date(date, 'DD/MM/YYYY') as sales_date,
+    sum(weekly_sales) as weekly_sales
 from
-    {{ ref('sales_data') }} s
+    {{ ref('sales_data') }}
 group by
-    s.Store, s.Date #}
-
-select "Store" from {{ ref('sales_data') }} limit 10
+    store, to_date(date, 'DD/MM/YYYY')
